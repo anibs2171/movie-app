@@ -3,6 +3,7 @@ import 'package:postgres/postgres.dart';
 
 void main() {
   runApp(MyApp());
+  // getData();
 }
 
 class MyApp extends StatelessWidget {
@@ -28,10 +29,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Movie App'),),
+      appBar: AppBar(
+        title: Text('Movie App'),
+      ),
       body: Center(
         child: TextButton(
-          onPressed: ()=>getData(),
+          onPressed: () {
+            getData();
+          },
           child: Icon(Icons.add),
         ),
       ),
@@ -49,8 +54,11 @@ class MovieCard extends StatelessWidget {
 }
 
 void getData() async {
-  var connection = PostgreSQLConnection(
-      "localhost", 5432, "movie_ratings", username: "postgres", password: "postgres");
+  final connection = PostgreSQLConnection('ec2-52-200-155-213.compute-1.amazonaws.com', 5432, 'dbca0g0f9vhbak',
+      username: 'btkydjfodbmlon', password: '9f0e0882442218b55ad591c941c7ce472eef22addf02a30df9413864d2d318d0',useSSL: true);
   await connection.open();
-  print(connection.query("select * from movie"));
+  var a = await connection.query('select * from movie');
+  print(a);
+  print('works');
+  await connection.close();
 }
