@@ -41,22 +41,12 @@ class _MyHomePageState extends State<MyHomePage> {
         return ListView.builder(itemBuilder: (context,index){
           return MovieCard(
             id: snapshot.data[index][0],
-            date: DateTime.fromMicrosecondsSinceEpoch(snapshot.data[index][2]),
+            date: snapshot.data[index][2].toString(),
             movie_name: snapshot.data[index][1],
             rating: snapshot.data[index][3].toString(),
           );
-        },itemCount: snapshot.data.length,);
-        // <Widget>[
-        //   const Icon(
-        //     Icons.check_circle_outline,
-        //     color: Colors.green,
-        //     size: 60,
-        //   ),
-        //   Padding(
-        //     padding: const EdgeInsets.only(top: 16),
-        //     child: Text('Result: ${snapshot.data}'),
-        //   )
-        // ];
+        },itemCount: snapshot.data.length,
+        );
       }
       else if (snapshot.hasError) {
         children = <Widget>[

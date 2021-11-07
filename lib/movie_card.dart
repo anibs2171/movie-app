@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'details.dart';
 
 class MovieCard extends StatelessWidget {
  MovieCard({required this.id, required this.date, required this.movie_name,required this.rating,});
   final int? id;
   final String? movie_name;
   // final String? genre;
-  final DateTime? date;
+  final String? date;
   final String? rating;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-
-      },
+Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieDetails(id: id)));},
       child: Padding(
         padding: EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
         child: Container(
@@ -50,18 +50,26 @@ class MovieCard extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(id.toString()),
-                    Text(movie_name!),
+                    Text(id.toString(),style: TextStyle(
+                      fontSize: 20
+                    ),),
+                    Text(movie_name!,style: TextStyle(
+                        fontSize: 20
+                    )),
                     // Text(genre!),
-                    Text(date.toString()),
-                    Text(rating!),
+                    Text(date!.split(' ')[0],style: TextStyle(
+                        fontSize: 20
+                    )),
+                    Text(rating!,style: TextStyle(
+                        fontSize: 20
+                    )),
                   ],
                 ),
               ],
             ),
           ),
       ),
-      ),
+      )
     );
   }
 }
