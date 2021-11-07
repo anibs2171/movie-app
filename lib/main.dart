@@ -44,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
             date: snapshot.data[index][2].toString(),
             movie_name: snapshot.data[index][1],
             rating: snapshot.data[index][3].toString(),
+            image: snapshot.data[index][10],
           );
         },itemCount: snapshot.data.length,
         );
@@ -70,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Padding(
             padding: EdgeInsets.only(top: 16),
-            child: Text('Awaiting result...'),
+            child: Text('Loading...'),
           )
         ];
       }
@@ -101,7 +102,7 @@ Future getData() async {
       username: 'btkydjfodbmlon', password: '9f0e0882442218b55ad591c941c7ce472eef22addf02a30df9413864d2d318d0',useSSL: true);
   await connection.open();
   var a = await connection.query('select * from movie');
-  // print(a);
+  print(a);
   print('works');
   await connection.close();
   return a;

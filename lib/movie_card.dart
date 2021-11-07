@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'details.dart';
 
 class MovieCard extends StatelessWidget {
- MovieCard({required this.id, required this.date, required this.movie_name,required this.rating,});
+ MovieCard({required this.id, required this.date, required this.movie_name,required this.rating,required this.image});
   final int? id;
   final String? movie_name;
-  // final String? genre;
+  final String? image;
   final String? date;
   final String? rating;
 
@@ -46,22 +46,30 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieDetails(id: i
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Icon(Icons.add_a_photo,size: 60,),
+                Image.network(
+                  image!,
+                  // height: 200,
+                  // width: 100,
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(id.toString(),style: TextStyle(
-                      fontSize: 20
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
                     ),),
                     Text(movie_name!,style: TextStyle(
-                        fontSize: 20
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold
                     )),
                     // Text(genre!),
                     Text(date!.split(' ')[0],style: TextStyle(
-                        fontSize: 20
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold
                     )),
                     Text(rating!,style: TextStyle(
-                        fontSize: 20
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold
                     )),
                   ],
                 ),
