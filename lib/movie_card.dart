@@ -44,7 +44,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieDetails(id: i
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image.network(
                   image!,
@@ -59,7 +59,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieDetails(id: i
                       fontWeight: FontWeight.bold
                     ),),
                     Text(movie_name!,style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 17,
                         fontWeight: FontWeight.bold
                     )),
                     // Text(genre!),

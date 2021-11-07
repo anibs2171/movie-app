@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:postgres/postgres.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class MovieDetails extends StatefulWidget {
   const MovieDetails({Key? key, required this.id}) : super(key: key);
@@ -18,8 +20,81 @@ class _MovieDetailsState extends State<MovieDetails> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            return Column(
-              children: [Text(snapshot.data!.toString())],
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Center(
+                      child: Text(snapshot.data![0][1].toString(),
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.network(
+                      snapshot.data![0][10],
+                      height: 500,
+                      width: 400,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(
+                      "Actor: ${snapshot.data![0][13]}",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text("Genre: ${snapshot.data![0][12]}",
+                        style: TextStyle(fontSize: 20)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text("Language: ${snapshot.data![0][16]}",
+                        style: TextStyle(fontSize: 20)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(
+                      "Director: ${snapshot.data![0][12]}",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text("Production House: ${snapshot.data![0][18]}",
+                        style: TextStyle(fontSize: 20)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text("Rate it:",
+                        style: TextStyle(fontSize: 20,
+                        color: Colors.green)),
+                  ),
+
+                  RatingBar.builder(
+                    initialRating: 3,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                    },
+                  ),
+                  SizedBox(
+                    height: 80,
+                  )
+                ],
+              ),
             );
           } else if (snapshot.hasError) {
             children = <Widget>[
@@ -67,7 +142,14 @@ Future getData(int? id) async {
           '9f0e0882442218b55ad591c941c7ce472eef22addf02a30df9413864d2d318d0',
       useSSL: true);
   await connection.open();
-  var a = await connection.query('select * from movie,genre  where movie.m_id=${id} and movie.genrid= genre.g_id');
+  var a = await connection
+      .query('''select * from movie,genre,actor,lang,productionhouse
+      where movie.m_id=${id} and 
+      movie.genrid= genre.g_id and 
+      movie.actorid = actor.a_id and 
+      movie.lang_id = lang.l_id and
+      movie.prodid = productionhouse.p_id
+      ''');
   print(a);
   print('works');
   await connection.close();
