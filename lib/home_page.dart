@@ -27,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     id: snapshot.data[index][0],
                     date: snapshot.data[index][2].toString(),
                     movie_name: snapshot.data[index][1],
-                    rating: "4/5",
+                    rating: snapshot.data[index][3].toString(),
                     //snapshot.data[index][3].toString(),
                     image: snapshot.data[index][10],
                   );

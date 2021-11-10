@@ -87,7 +87,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                       color: Colors.amber,
                     ),
                     onRatingUpdate: (rating) {
-                      print(rating);
+                      update(rating,widget.id);
                     },
                   ),
                   SizedBox(
@@ -154,4 +154,26 @@ Future getData(int? id) async {
   print('works');
   await connection.close();
   return a;
+}
+
+void update(double? val,int? mvid) async {
+  final connection = PostgreSQLConnection(
+      'ec2-52-200-155-213.compute-1.amazonaws.com', 5432, 'dbca0g0f9vhbak',
+      username: 'btkydjfodbmlon',
+      password:
+      '9f0e0882442218b55ad591c941c7ce472eef22addf02a30df9413864d2d318d0',
+      useSSL: true);
+  await connection.open();
+  var a = await connection
+      .query('''
+      update users set idvsrating = idvsrating || '{"${mvid}":${val}}'::jsonb where u_id=2;
+      ''');
+  print(a);
+  var b = await connection
+      .query('''
+      update movie set rating = (select cast(avg(cast(idvsrating -> '${mvid}' as integer)) as numeric(2,1)) from users) where m_id = ${mvid} ;
+      ''');
+  print(b);
+  print('works');
+  await connection.close();
 }
