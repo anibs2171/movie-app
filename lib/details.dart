@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:postgres/postgres.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:postgres/postgres.dart';
 
 class MovieDetails extends StatefulWidget {
   const MovieDetails({Key? key, required this.id}) : super(key: key);
@@ -70,11 +69,14 @@ class _MovieDetailsState extends State<MovieDetails> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(5.0),
-                    child: Text("Rate it:",
-                        style: TextStyle(fontSize: 20,
-                        color: Colors.green)),
+                    child: Text("Avg Rating: ${snapshot.data![0][3]}",
+                        style: TextStyle(fontSize: 20)),
                   ),
-
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text("Rate it:",
+                        style: TextStyle(fontSize: 20, color: Colors.green)),
+                  ),
                   RatingBar.builder(
                     initialRating: 3,
                     minRating: 1,
@@ -87,7 +89,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                       color: Colors.amber,
                     ),
                     onRatingUpdate: (rating) {
-                      update(rating,widget.id);
+                      update(rating, widget.id);
                     },
                   ),
                   SizedBox(
@@ -156,21 +158,19 @@ Future getData(int? id) async {
   return a;
 }
 
-void update(double? val,int? mvid) async {
+void update(double? val, int? mvid) async {
   final connection = PostgreSQLConnection(
       'ec2-52-200-155-213.compute-1.amazonaws.com', 5432, 'dbca0g0f9vhbak',
       username: 'btkydjfodbmlon',
       password:
-      '9f0e0882442218b55ad591c941c7ce472eef22addf02a30df9413864d2d318d0',
+          '9f0e0882442218b55ad591c941c7ce472eef22addf02a30df9413864d2d318d0',
       useSSL: true);
   await connection.open();
-  var a = await connection
-      .query('''
+  var a = await connection.query('''
       update users set idvsrating = idvsrating || '{"${mvid}":${val}}'::jsonb where u_id=2;
       ''');
   print(a);
-  var b = await connection
-      .query('''
+  var b = await connection.query('''
       update movie set rating = (select cast(avg(cast(idvsrating -> '${mvid}' as integer)) as numeric(2,1)) from users) where m_id = ${mvid} ;
       ''');
   print(b);
