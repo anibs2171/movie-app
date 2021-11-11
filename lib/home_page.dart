@@ -3,8 +3,8 @@ import "movie_card.dart";
 import 'package:postgres/postgres.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
+  MyHomePage({Key? key, required this.uid});
+  int? uid;
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }

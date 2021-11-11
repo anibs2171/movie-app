@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:movie_app/home_page.dart';
 import 'package:postgres/postgres.dart';
-
+int? uid;
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                       _passwordController.text.toString().trim();
                       verify(email,password).then((value){
                         if(value==true){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage(uid: uid)));
                         }
                       });
                       // await userLogin(email, password);
@@ -194,7 +194,7 @@ Future<bool> verify(String uname, String passwd) async {
   await connection.close();
   for(int i=0;i<a.length;i++){
 if(a[i][0]==uname && a[i][1]==passwd){
-
+  uid = i;
   return true;
 }
   }

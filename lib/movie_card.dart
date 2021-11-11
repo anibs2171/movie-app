@@ -9,6 +9,7 @@ class MovieCard extends StatelessWidget {
   final String? date;
   final String? rating;
 
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
