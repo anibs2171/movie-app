@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:postgres/postgres.dart';
+import 'home_page.dart';
 
 class MovieDetails extends StatefulWidget {
   const MovieDetails({Key? key, required this.id}) : super(key: key);
@@ -12,159 +13,165 @@ class MovieDetails extends StatefulWidget {
 class _MovieDetailsState extends State<MovieDetails> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: ()async{
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage(uid: 1),));
+        return true;
+      },
+      child: Scaffold(
 
-      appBar: AppBar(
-        backgroundColor: Colors.black45,
-        /*actions: <Widget>[
-          IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.movie))
-        ],*/
-      ),
-      body: FutureBuilder(
-        future: getData(widget.id),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          List<Widget> children;
+        appBar: AppBar(
+          backgroundColor: Colors.black45,
+          /*actions: <Widget>[
+            IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.movie))
+          ],*/
+        ),
+        body: FutureBuilder(
+          future: getData(widget.id),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            List<Widget> children;
 
-          if (snapshot.hasData) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Center(
-                      child: Text(snapshot.data![0][1].toString(),
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold)),
+            if (snapshot.hasData) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Center(
+                        child: Text(snapshot.data![0][1].toString(),
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold)),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.network(
-                      snapshot.data![0][10],
-                      height: 500,
-                      width: 400,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.network(
+                        snapshot.data![0][10],
+                        height: 500,
+                        width: 400,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      "Actor: ${snapshot.data![0][13]}",
-                      style: TextStyle(fontSize: 20),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        "Actor: ${snapshot.data![0][13]}",
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text("Genre: ${snapshot.data![0][12]}",
-                        style: TextStyle(fontSize: 20)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text("Language: ${snapshot.data![0][16]}",
-                        style: TextStyle(fontSize: 20)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      "Director: ${snapshot.data![0][12]}",
-                      style: TextStyle(fontSize: 20),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text("Genre: ${snapshot.data![0][12]}",
+                          style: TextStyle(fontSize: 20)),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text("Production House: ${snapshot.data![0][18]}",
-                        style: TextStyle(fontSize: 20)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text("Avg Rating: ${snapshot.data![0][3]}",
-                        style: TextStyle(fontSize: 20)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text("Rate it:",
-                        style: TextStyle(fontSize: 20, color: Colors.green)),
-                  ),
-                  RatingBar.builder(
-                    initialRating: 3,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.amber,
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text("Language: ${snapshot.data![0][16]}",
+                          style: TextStyle(fontSize: 20)),
                     ),
-                    onRatingUpdate: (rating) {
-                      update(rating, widget.id);
-                    },
-                  ),
-                  SizedBox(
-                    height: 80,
-                  ),
-                  //HOW TO MAKE THIS BG?
-                  new Image(image: NetworkImage("https://www.clipartmax.com/png/small/8-87550_free-to-use-popcorn-clip-art-movie-popcorn-clip-art.png")),
-                ],
-              ),
-            );
-          } else if (snapshot.hasError) {
-            children = <Widget>[
-              const Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 60,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
-              )
-            ];
-          } else {
-            children = const <Widget>[
-              SizedBox(
-                child: CircularProgressIndicator(),
-                width: 60,
-                height: 60,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text('Loading...'),
-              ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        "Director: ${snapshot.data![0][12]}",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text("Production House: ${snapshot.data![0][18]}",
+                          style: TextStyle(fontSize: 20)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text("Avg Rating: ${snapshot.data![0][3]}",
+                          style: TextStyle(fontSize: 20)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text("Rate it:",
+                          style: TextStyle(fontSize: 20, color: Colors.green)),
+                    ),
+                    RatingBar.builder(
+                      initialRating: 3,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        update(rating, widget.id);
+                      },
+                    ),
+                    SizedBox(
+                      height: 80,
+                    ),
+                    //HOW TO MAKE THIS BG?
+                    new Image(image: NetworkImage("https://www.clipartmax.com/png/small/8-87550_free-to-use-popcorn-clip-art-movie-popcorn-clip-art.png")),
+                  ],
+                ),
+              );
+            } else if (snapshot.hasError) {
+              children = <Widget>[
+                const Icon(
+                  Icons.error_outline,
+                  color: Colors.red,
+                  size: 60,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Text('Error: ${snapshot.error}'),
+                )
+              ];
+            } else {
+              children = const <Widget>[
+                SizedBox(
+                  child: CircularProgressIndicator(),
+                  width: 60,
+                  height: 60,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: Text('Loading...'),
+                ),
 
-            ];
-          }
-          /*return Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  image: new NetworkImage(
+              ];
+            }
+            /*return Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: new BoxDecoration(
+                  image: new DecorationImage(
+                    image: new NetworkImage(
+                        "https://www.pngall.com/wp-content/uploads/1/Film-High-Quality-PNG.png"
+                    ),
+                     //fit: BoxFit.w,
+                  )
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: children,
+
+                ),
+              ),
+            );*/
+            return Container(
+              decoration: new BoxDecoration(
+                  image: new DecorationImage(
+                    image: new NetworkImage(
                       "https://www.pngall.com/wp-content/uploads/1/Film-High-Quality-PNG.png"
-                  ),
-                   //fit: BoxFit.w,
-                )
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: children,
-
+                    ),
+                    fit: BoxFit.cover,
+                  )
               ),
-            ),
-          );*/
-          return Container(
-            decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  image: new NetworkImage(
-                    "https://www.pngall.com/wp-content/uploads/1/Film-High-Quality-PNG.png"
-                  ),
-                  fit: BoxFit.cover,
-                )
-            ),
 
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
