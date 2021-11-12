@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         elevation: 15.0,
         title: Text("Login Page"),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.black,
       ),
       // backgroundColor: Colors.blue,
       body: ModalProgressHUD(
@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       "Log In",
                       style: TextStyle(
-                        color: Colors.blue,
+                        color: Colors.black54,
                         fontSize: 40.0,
                         fontWeight: FontWeight.w800,
                       ),
@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         labelText: "Enter your Username",
                         labelStyle: TextStyle(
-                          color: Colors.blue,
+                          color: Colors.black45,
                         )),
                   ),
                   SizedBox(
@@ -110,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       labelText: "Enter your password",
                       labelStyle: TextStyle(
-                        color: Colors.blue,
+                        color: Colors.black45,
                       ),
                     ),
                   ),
@@ -118,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 30.0,
                   ),
                   RoundedButton(
-                    colour: Colors.white,
+                    colour: Colors.grey,
                     text: "Log In",
                     onPressed: () async {
                       setState(() {
@@ -169,7 +169,7 @@ class RoundedButton extends StatelessWidget {
             child: Text(
               text!,
               style: TextStyle(
-                color: Colors.blue,
+                color:Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
