@@ -13,11 +13,18 @@ class _MovieDetailsState extends State<MovieDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+
+      appBar: AppBar(
+        backgroundColor: Colors.black45,
+        /*actions: <Widget>[
+          IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.movie))
+        ],*/
+      ),
       body: FutureBuilder(
         future: getData(widget.id),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           List<Widget> children;
+
           if (snapshot.hasData) {
             return SingleChildScrollView(
               child: Column(
@@ -94,7 +101,9 @@ class _MovieDetailsState extends State<MovieDetails> {
                   ),
                   SizedBox(
                     height: 80,
-                  )
+                  ),
+                  //HOW TO MAKE THIS BG?
+                  new Image(image: NetworkImage("https://www.clipartmax.com/png/small/8-87550_free-to-use-popcorn-clip-art-movie-popcorn-clip-art.png")),
                 ],
               ),
             );
@@ -120,15 +129,40 @@ class _MovieDetailsState extends State<MovieDetails> {
               Padding(
                 padding: EdgeInsets.only(top: 16),
                 child: Text('Loading...'),
-              )
+              ),
+
             ];
           }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: children,
+          /*return Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  image: new NetworkImage(
+                      "https://www.pngall.com/wp-content/uploads/1/Film-High-Quality-PNG.png"
+                  ),
+                   //fit: BoxFit.w,
+                )
             ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: children,
+
+              ),
+            ),
+          );*/
+          return Container(
+            decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  image: new NetworkImage(
+                    "https://www.pngall.com/wp-content/uploads/1/Film-High-Quality-PNG.png"
+                  ),
+                  fit: BoxFit.cover,
+                )
+            ),
+
           );
         },
       ),

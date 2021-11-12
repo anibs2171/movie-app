@@ -15,7 +15,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Movie App'),
+          backgroundColor: Colors.black54,
         ),
+        backgroundColor: Colors.grey,
         body: FutureBuilder(
           future: getData(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -31,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     //snapshot.data[index][3].toString(),
                     image: snapshot.data[index][10],
                   );
+                  //HOW TO ADD BGCOLOR TO CARD
                 },
                 itemCount: snapshot.data.length,
               );
@@ -79,7 +82,7 @@ Future getData() async {
       '9f0e0882442218b55ad591c941c7ce472eef22addf02a30df9413864d2d318d0',
       useSSL: true);
   await connection.open();
-  var a = await connection.query('select * from movie');
+  var a = await connection.query('select * from movie order by rating');
   print(a);
   print('works');
   await connection.close();
