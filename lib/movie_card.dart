@@ -1,88 +1,91 @@
 import 'package:flutter/material.dart';
+
 import 'details.dart';
 
 class MovieCard extends StatelessWidget {
- MovieCard({required this.id, required this.date, required this.movie_name,required this.rating,required this.image});
+  MovieCard(
+      {required this.id,
+      required this.date,
+      required this.movie_name,
+      required this.rating,
+      required this.image});
   final int? id;
   final String? movie_name;
   final String? image;
   final String? date;
   final String? rating;
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieDetails(id: id)));},
-      child: Padding(
-        padding: EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
-        child: Container(
-          // color: Colors.grey,
-          width: double.infinity,
-          height: 250,
-          decoration: BoxDecoration(
-            color: Colors.white70,
-          borderRadius: BorderRadius.circular(10.0),
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => MovieDetails(id: id)));
+        },
+        child: Padding(
+          padding: EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
+          child: Container(
+            // color: Colors.grey,
+            width: double.infinity,
+            height: 250,
+            decoration: BoxDecoration(
+              color: Colors.white70,
+              borderRadius: BorderRadius.circular(10.0),
               boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              offset: const Offset(
-                5.0,
-                5.0,
-              ),
-              blurRadius: 10.0,
-              spreadRadius: 2.0,
-            ), //BoxShadow
-            BoxShadow(
-              color: Colors.white,
-              offset: const Offset(0.0, 0.0),
-              blurRadius: 0.0,
-              spreadRadius: 0.0,
-            ), //BoxShadow
-          ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.network(
-                  image!,
-                  // height: 200,
-                  // width: 100,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(id.toString(),style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
-                    ),),
-                    Text(movie_name!,style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold
-                    )),
-                    // Text(genre!),
-                    Text(date!.split(' ')[0],style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold
-                    )),
-                    Text(rating!,style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold
-                    )),
-                  ],
-                ),
+                BoxShadow(
+                  color: Colors.black26,
+                  offset: const Offset(
+                    5.0,
+                    5.0,
+                  ),
+                  blurRadius: 10.0,
+                  spreadRadius: 2.0,
+                ), //BoxShadow
+                BoxShadow(
+                  color: Colors.white,
+                  offset: const Offset(0.0, 0.0),
+                  blurRadius: 0.0,
+                  spreadRadius: 0.0,
+                ), //BoxShadow
               ],
             ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Image.network(
+                    image!,
+                    // height: 200,
+                    // width: 100,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "ID : ${id.toString()}",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      Text(movie_name!,
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.bold)),
+                      // Text(genre!),
+                      Text(date!.split(' ')[0],
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      Text(rating!,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
-      ),
-      )
-    );
+        ));
   }
 }
-
 
 // class MovieCard extends StatelessWidget {
 //   const MovieCard(
