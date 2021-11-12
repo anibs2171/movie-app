@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/login_page.dart';
 import 'package:postgres/postgres.dart';
 
 import "movie_card.dart";
@@ -20,12 +21,20 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Colors.black54,
           actions: [
             IconButton(
-                onPressed: () {
-                  setState(() {
-                    isOrdered = !isOrdered;
-                  });
-                },
-                icon: Icon(Icons.sort))
+              onPressed: () {
+                setState(() {
+                  isOrdered = !isOrdered;
+                });
+              },
+              icon: Icon(Icons.sort),
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              },
+              icon: Icon(Icons.logout),
+            )
           ],
         ),
         backgroundColor: Colors.grey,
